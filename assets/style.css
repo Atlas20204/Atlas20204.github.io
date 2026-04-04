@@ -18,15 +18,16 @@
     border-top-right-radius: 10px;
 }
 
-/* Hero background */
+/* Hero section full height for header image */
 .hero-section {
-    height: 450px; /* taller to accommodate bigger pfp */
+    height: 400px;              /* adjust as needed */
     position: relative;
+    margin-top: 0;              /* ensure it starts under navbar */
 }
 
-/* Background image fills hero */
+/* Background image covers entire hero section */
 .hero-section .bg-image {
-    background-image: url('../images/header-bg.jpg');
+    background-image: url('../images/header-bg.jpg'); /* correct path */
     background-size: cover;
     background-position: center;
     width: 100%;
@@ -37,14 +38,14 @@
     z-index: 1;
 }
 
-/* Profile picture aligned with container */
+/* Profile picture */
 .hero-section .profile-pic {
-    width: 200px;           /* bigger size */
-    height: 200px;
+    width: 220px;               /* bigger size */
+    height: 220px;
     object-fit: cover;
     position: absolute;
-    bottom: -100px;         /* half of height for half-in/half-out */
-    left: 0;                /* relative to container, so lines up */
+    bottom: -110px;             /* half-in/half-out */
+    left: 0;                    /* aligned with container text */
     z-index: 2;
     border-radius: 50%;
     border: 4px solid white;
