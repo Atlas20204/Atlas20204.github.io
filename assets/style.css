@@ -27,7 +27,7 @@
 
 /* Background image fills hero section */
 .hero-section .bg-image {
-    background-image: url('images/header-bg.jpg'); /* replace with your header image */
+    background-image: url('./images/header-bg.jpg'); /* replace with your header image */
     background-size: cover;
     background-position: center;
     width: 100%;
