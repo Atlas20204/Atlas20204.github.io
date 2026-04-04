@@ -1,12 +1,13 @@
 /* ===================== Hero Section ===================== */
+/* Hero section */
 .hero-section {
     position: relative;
-    height: 500px;           /* header height */
-    margin-bottom: 150px;    /* space below PFP */
+    height: 450px;                /* height of header */
+    margin-bottom: 120px;         /* space for PFP to not overlap next section */
 }
 
-/* Background image */
-.hero-section .bg-image {
+/* Background */
+.hero-bg {
     position: absolute;
     top: 0;
     left: 0;
@@ -19,18 +20,12 @@
 }
 
 /* Hero content container */
-.hero-content {
+.hero-container {
     position: relative;
-    z-index: 2;
+    z-index: 2;                     /* above background */
     display: flex;
-    align-items: flex-end;    /* bottom-align PFP and text */
-    padding-top: 120px;       /* space below navbar */
-}
-
-/* Profile picture column */
-.profile-col {
-    flex: 0 0 auto;
-    margin-right: 20px;
+    align-items: flex-end;          /* bottom-align PFP + text */
+    padding-top: 80px;              /* pushes content below navbar */
 }
 
 /* Profile picture */
@@ -40,17 +35,16 @@
     border-radius: 50%;
     border: 4px solid white;
     object-fit: cover;
-    margin-bottom: -110px;     /* half-in/half-out of hero */
+    margin-right: 20px;
+    margin-bottom: -110px;           /* half overlaps bottom of hero */
     box-shadow: 0 4px 15px rgba(0,0,0,0.25);
-    z-index: 3;
 }
 
-/* Text column next to PFP */
-.text-col {
-    flex: 1;
+/* Name + Role */
+.hero-text {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;  /* bottom-align text with PFP */
+    justify-content: flex-end;       /* bottom align text with PFP */
 }
 
 /* ===================== Projects Carousel ===================== */
