@@ -1,12 +1,10 @@
 /* ===================== Hero Section ===================== */
-/* Hero section */
 .hero-section {
     position: relative;
-    height: 450px;                /* height of header */
-    margin-bottom: 120px;         /* space for PFP to not overlap next section */
+    height: 450px;               /* height of header */
+    margin-bottom: 120px;        /* space for PFP */
 }
 
-/* Background */
 .hero-bg {
     position: absolute;
     top: 0;
@@ -19,16 +17,14 @@
     z-index: 0;
 }
 
-/* Hero content container */
 .hero-container {
     position: relative;
-    z-index: 2;                     /* above background */
+    z-index: 2;
     display: flex;
-    align-items: flex-end;          /* bottom-align PFP + text */
-    padding-top: 80px;              /* pushes content below navbar */
+    align-items: flex-end;       /* bottom-align PFP + text */
+    padding-top: 80px;           /* pushes below navbar */
 }
 
-/* Profile picture */
 .profile-pic {
     width: 220px;
     height: 220px;
@@ -36,15 +32,14 @@
     border: 4px solid white;
     object-fit: cover;
     margin-right: 20px;
-    margin-bottom: -110px;           /* half overlaps bottom of hero */
+    margin-bottom: -110px;       /* half-overlaps hero */
     box-shadow: 0 4px 15px rgba(0,0,0,0.25);
 }
 
-/* Name + Role */
 .hero-text {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;       /* bottom align text with PFP */
+    justify-content: flex-end;   /* bottom align text with PFP */
 }
 
 /* ===================== Projects Carousel ===================== */
