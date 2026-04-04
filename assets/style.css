@@ -18,36 +18,55 @@
     border-top-right-radius: 10px;
 }
 
+/* Hero section */
 .hero-section {
-    height: 450px; /* adjust so PFP fits without overlapping next section */
     position: relative;
-    margin-bottom: 120px; /* spacing below hero for PFP */
+    height: 400px; /* height of header image */
+    margin-bottom: 150px; /* space so profile doesn't hit next section */
 }
 
-/* Background image behind everything */
+/* Background image */
 .hero-section .bg-image {
-    background-image: url('../images/header-bg.jpg'); 
-    background-size: cover;
-    background-position: center;
-    width: 100%;
-    height: 100%;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 0; /* behind profile pic and text */
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/header-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 0; /* behind everything */
 }
 
-/* Profile picture overlapping bottom of hero */
+/* Hero content (text + PFP) */
+.hero-content {
+    position: relative;
+    z-index: 2; /* above background */
+    display: flex;
+    align-items: flex-end; /* aligns text and PFP to bottom */
+}
+
+/* Profile picture column */
+.profile-col {
+    flex: 0 0 auto; /* take only as much space as needed */
+    margin-right: 20px;
+}
+
+/* Profile picture itself */
 .profile-pic {
     width: 220px;
     height: 220px;
-    object-fit: cover;
     border-radius: 50%;
     border: 4px solid white;
-    z-index: 2;        /* above background */
+    object-fit: cover;
+    margin-bottom: -110px; /* half-in/half-out of hero */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
 }
 
-/* Optional: add a subtle shadow so PFP pops */
-.profile-pic {
-    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+/* Text column */
+.text-col {
+    flex: 1; /* take remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* align text bottom with PFP */
 }
