@@ -20,14 +20,13 @@
 
 /* Hero background */
 .hero-section {
-    height: 400px; /* total height */
+    height: 400px; /* adjust as needed */
     position: relative;
-    margin-bottom: 80px; /* space for content below */
 }
 
-/* Background image fills hero section */
+/* Background image */
 .hero-section .bg-image {
-    background-image: url('../images/header-bg.jpg'); /* replace with your header image */
+    background-image: url('../images/header-bg.jpg'); /* correct path */
     background-size: cover;
     background-position: center;
     width: 100%;
@@ -38,20 +37,15 @@
     z-index: 1;
 }
 
-/* Container content above the background */
-.hero-section .container {
-    position: relative;
-    z-index: 2;
-}
-
-/* Profile picture overlapping */
+/* Profile picture overlapping bottom-left */
 .profile-pic {
-    width: 150px;
-    height: 150px;
+    width: 150px;           /* adjust size */
+    height: 150px;          /* adjust size */
     object-fit: cover;
     position: absolute;
-    top: 250px; /* adjust to be half overlapping */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3;
+    bottom: -75px;          /* half of height, so half overlaps */
+    left: 0;                /* far left of page */
+    z-index: 2;
+    border-radius: 50%;
+    border: 3px solid white;
 }
