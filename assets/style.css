@@ -20,13 +20,13 @@
 
 /* Hero background */
 .hero-section {
-    height: 400px; /* adjust as needed */
+    height: 450px; /* taller to accommodate bigger pfp */
     position: relative;
 }
 
-/* Background image */
+/* Background image fills hero */
 .hero-section .bg-image {
-    background-image: url('../images/header-bg.jpg'); /* correct path */
+    background-image: url('../images/header-bg.jpg');
     background-size: cover;
     background-position: center;
     width: 100%;
@@ -37,15 +37,15 @@
     z-index: 1;
 }
 
-/* Profile picture overlapping bottom-left */
-.profile-pic {
-    width: 150px;           /* adjust size */
-    height: 150px;          /* adjust size */
+/* Profile picture aligned with container */
+.hero-section .profile-pic {
+    width: 200px;           /* bigger size */
+    height: 200px;
     object-fit: cover;
     position: absolute;
-    bottom: -75px;          /* half of height, so half overlaps */
-    left: 0;                /* far left of page */
+    bottom: -100px;         /* half of height for half-in/half-out */
+    left: 0;                /* relative to container, so lines up */
     z-index: 2;
     border-radius: 50%;
-    border: 3px solid white;
+    border: 4px solid white;
 }
