@@ -18,14 +18,13 @@
     border-top-right-radius: 10px;
 }
 
-/* Hero section full height for header image */
 .hero-section {
-    height: 450px;  /* taller to fit PFP without hitting next section */
+    height: 450px; /* adjust so PFP fits without overlapping next section */
     position: relative;
-    margin-bottom: 120px; /* ensures PFP doesn't overlap next section */
+    margin-bottom: 120px; /* spacing below hero for PFP */
 }
 
-/* Background image */
+/* Background image behind everything */
 .hero-section .bg-image {
     background-image: url('../images/header-bg.jpg'); 
     background-size: cover;
@@ -35,16 +34,20 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1;
+    z-index: 0; /* behind profile pic and text */
 }
 
 /* Profile picture overlapping bottom of hero */
 .profile-pic {
-    width: 220px;               
+    width: 220px;
     height: 220px;
     object-fit: cover;
     border-radius: 50%;
     border: 4px solid white;
-    margin-bottom: -110px;      /* half overlaps bottom of hero */
-    z-index: 2;
+    z-index: 2;        /* above background */
+}
+
+/* Optional: add a subtle shadow so PFP pops */
+.profile-pic {
+    box-shadow: 0 4px 15px rgba(0,0,0,0.25);
 }
