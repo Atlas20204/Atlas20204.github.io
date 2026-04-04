@@ -9,7 +9,7 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Your custom CSS -->
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/style.css">
 </head>
 
@@ -33,26 +33,19 @@
         </div>
     </nav>
 
+    <!-- Hero Section -->
     <section class="hero-section position-relative">
-  <!-- Background Image -->
-  <div class="bg-image"></div>
-
-  <!-- Hero content container -->
-  <div class="container hero-content d-flex align-items-end">
-    
-    <!-- Profile picture -->
-    <div class="profile-col">
-      <img src="../images/profile.jpg" alt="Profile Picture" class="profile-pic rounded-circle border border-3 border-white">
-    </div>
-
-    <!-- Text next to profile -->
-    <div class="text-col">
-      <h1>FIRST LAST</h1>
-      <p class="lead">Student | Web Developer | EV Enthusiast</p>
-    </div>
-
-  </div>
-</section>
+        <div class="bg-image"></div>
+        <div class="container hero-content d-flex align-items-end">
+            <div class="profile-col">
+                <img src="../images/profile.jpg" alt="Profile Picture" class="profile-pic rounded-circle border border-3 border-white">
+            </div>
+            <div class="text-col">
+                <h1>FIRST LAST</h1>
+                <p class="lead">Student | Web Developer | EV Enthusiast</p>
+            </div>
+        </div>
+    </section>
 
     <!-- About Me -->
     <section id="about" class="container my-5">
@@ -63,57 +56,56 @@
 
     <!-- Projects -->
     <section id="projects" class="container my-5">
-  <h2>Projects</h2>
+        <h2>Projects</h2>
+        <div id="projectsCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+            <div class="carousel-inner">
 
-  <div id="projectsCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
-    <div class="carousel-inner">
+                <!-- Slide 1 -->
+                <div class="carousel-item active">
+                    <div class="card text-center">
+                        <img src="assets/ev-conversion.jpg" class="card-img-top" alt="EV Conversion Project">
+                        <div class="card-body">
+                            <h5 class="card-title">EV Conversion Project</h5>
+                            <p class="card-text">Converting a 2003 Ford Ranger to a fully electric drivetrain.</p>
+                        </div>
+                    </div>
+                </div>
 
-      <!-- Slide 1 -->
-      <div class="carousel-item active">
-        <div class="card text-center">
-          <img src="assets/ev-conversion.jpg" class="card-img-top" alt="EV Conversion Project">
-          <div class="card-body">
-            <h5 class="card-title">EV Conversion Project</h5>
-            <p class="card-text">Converting a 2003 Ford Ranger to a fully electric drivetrain.</p>
-          </div>
+                <!-- Slide 2 -->
+                <div class="carousel-item">
+                    <div class="card text-center">
+                        <img src="assets/windows7-iso.jpg" class="card-img-top" alt="Custom Windows 7 ISO">
+                        <div class="card-body">
+                            <h5 class="card-title">Custom Windows 7 ISO</h5>
+                            <p class="card-text">Built a Windows 7 Professional ISO with all updates integrated using NTLite.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="carousel-item">
+                    <div class="card text-center">
+                        <img src="assets/bolt-diagnostics.jpg" class="card-img-top" alt="Bolt EV Diagnostics">
+                        <div class="card-body">
+                            <h5 class="card-title">Bolt EV Diagnostics</h5>
+                            <p class="card-text">Custom dashboard tools for monitoring 2017 Bolt EV systems.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Carousel controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#projectsCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#projectsCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-      </div>
-
-      <!-- Slide 2 -->
-      <div class="carousel-item">
-        <div class="card text-center">
-          <img src="assets/windows7-iso.jpg" class="card-img-top" alt="Custom Windows 7 ISO">
-          <div class="card-body">
-            <h5 class="card-title">Custom Windows 7 ISO</h5>
-            <p class="card-text">Built a Windows 7 Professional ISO with all updates integrated using NTLite.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Slide 3 -->
-      <div class="carousel-item">
-        <div class="card text-center">
-          <img src="assets/bolt-diagnostics.jpg" class="card-img-top" alt="Bolt EV Diagnostics">
-          <div class="card-body">
-            <h5 class="card-title">Bolt EV Diagnostics</h5>
-            <p class="card-text">Custom dashboard tools for monitoring 2017 Bolt EV systems.</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Carousel controls -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#projectsCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#projectsCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-</section>
+    </section>
 
     <!-- Experience -->
     <section id="experience" class="container my-5">
@@ -138,7 +130,7 @@
         <p>GitHub: <a href="#">github.com/yourusername</a></p>
     </section>
 
-    <!-- Extra filler content -->
+    <!-- Extra content -->
     <section class="container my-5">
         <h2>More Stuff</h2>
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nec leo sed sapien blandit fermentum.</p>
@@ -148,9 +140,8 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur nec leo sed sapien blandit fermentum.</p>
     </section>
 
-    <!-- Bootstrap JS (for navbar collapse) -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 
 </html>
