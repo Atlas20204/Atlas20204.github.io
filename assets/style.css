@@ -21,8 +21,8 @@
 /* Hero section */
 .hero-section {
     position: relative;
-    height: 400px; /* height of header image */
-    margin-bottom: 150px; /* space so profile doesn't hit next section */
+    height: 500px;          /* taller for spacing */
+    margin-bottom: 150px;   /* space below for PFP */
 }
 
 /* Background image */
@@ -41,32 +41,33 @@
 /* Hero content (text + PFP) */
 .hero-content {
     position: relative;
-    z-index: 2; /* above background */
+    z-index: 2; 
     display: flex;
-    align-items: flex-end; /* aligns text and PFP to bottom */
+    align-items: flex-end; /* aligns content to bottom of hero section */
+    padding-top: 80px;     /* pushes content down so it's not on top of navbar */
 }
 
 /* Profile picture column */
 .profile-col {
-    flex: 0 0 auto; /* take only as much space as needed */
+    flex: 0 0 auto;
     margin-right: 20px;
 }
 
-/* Profile picture itself */
+/* Profile picture */
 .profile-pic {
     width: 220px;
     height: 220px;
     border-radius: 50%;
     border: 4px solid white;
     object-fit: cover;
-    margin-bottom: -110px; /* half-in/half-out of hero */
+    margin-bottom: -110px; /* half overlaps bottom of hero */
     box-shadow: 0 4px 15px rgba(0,0,0,0.25);
 }
 
 /* Text column */
 .text-col {
-    flex: 1; /* take remaining space */
+    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end; /* align text bottom with PFP */
+    justify-content: flex-end; /* bottom-align text with PFP */
 }
