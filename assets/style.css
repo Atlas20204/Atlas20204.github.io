@@ -7,3 +7,12 @@
     margin-left: 15px;
     margin-right: 15px;
 }
+
+/* Header / Hero section */
+.hero-header {
+    height: 400px; /* adjust height as needed */
+    background-image: url('../images/header-bg.jpg'); /* replace with your image path */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
