@@ -10,3 +10,7 @@ nav a:hover {
 body > *not(nav) {
   padding: 20px;
 }
+
+body {
+  background-color: red;
+}
