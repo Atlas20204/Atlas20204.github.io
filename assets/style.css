@@ -1,1 +1,303 @@
+﻿/* ==================================================
+   NAVBAR
+================================================== */
+.navbar {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
 
+.navbar-nav .nav-link {
+    margin: 0 15px;
+    padding: 1rem;
+    text-align: center;
+}
+
+/* ==================================================
+   HEADER + PROFILE PICTURE
+================================================== */
+.header-image {
+    position: relative;
+    height: 200px;
+    overflow: visible;
+}
+
+    .header-image img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+.profile-pic {
+    width: 300px !important;
+    height: 300px !important;
+    border-radius: 50%;
+    border: 6px solid #fff;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    background-color: #fff;
+    position: absolute;
+    bottom: -150px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    max-width: none !important;
+}
+
+.pfp-wrapper {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    width: 300px;
+    height: 0;
+}
+
+/* ==================================================
+   SECTIONS
+================================================== */
+.section-block {
+    padding: 60px 0;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+/* ==================================================
+   EXPERIENCE — LAYOUT + COLLAPSE
+================================================== */
+.experience-layout {
+    display: block;
+}
+
+.experience-title,
+.experience-content {
+    padding: 0;
+}
+
+.exp-toggle {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 12px 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.exp-body {
+    padding-left: 10px;
+    margin-bottom: 20px;
+}
+
+/* Collapse animation (scoped) */
+.experience-content .collapse {
+    display: block;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.35s ease;
+    padding-bottom: 1px;
+}
+
+    .experience-content .collapse.show {
+        max-height: 500px;
+        padding-bottom: 1px;
+    }
+
+/* ==================================================
+   EXPERIENCE — CHEVRON
+================================================== */
+.exp-toggle .chevron {
+    width: 12px;
+    height: 12px;
+    border-right: 2px solid #333;
+    border-bottom: 2px solid #333;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 0.3s ease;
+}
+
+.exp-toggle[aria-expanded="true"] .chevron {
+    transform: translateY(-2px) rotate(-135deg);
+}
+
+/* ==================================================
+   PROJECTS — POLISHED CARD DESIGN
+================================================== */
+.project-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    max-width: 800px;
+    margin: 0 auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-image {
+    width: 100%;
+    height: 260px;
+    overflow: hidden;
+    background: #f0f0f0;
+}
+
+    .project-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.project-content {
+    padding: 24px 28px;
+}
+
+    .project-content h4 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .project-content p {
+        font-size: 1rem;
+        color: #444;
+        line-height: 1.5;
+    }
+
+/* Hover lift */
+@media (min-width: 768px) {
+    .project-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 24px rgba(0,0,0,0.16);
+    }
+}
+
+/* ==================================================
+   RESPONSIVE BREAKPOINTS
+================================================== */
+
+/* Desktop wide (≥1320px) */
+@media (min-width: 1320px) {
+    .pfp-wrapper {
+        left: calc((100vw - 1320px) / 2);
+        transform: none;
+    }
+
+    .text-section {
+        margin-top: 60px !important;
+        text-align: left;
+    }
+}
+
+/* Ultra-wide (≥1920px) */
+@media (min-width: 1920px) {
+    .experience-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        column-gap: 40px;
+    }
+
+    .experience-title {
+        grid-column: 1;
+    }
+
+    .experience-content {
+        grid-column: 2;
+    }
+}
+
+/* Tablet / small desktop (768–1319px) */
+@media (min-width: 768px) and (max-width: 1319.98px) {
+    .text-section {
+        margin-top: 150px !important;
+        text-align: center;
+    }
+}
+
+/* Small screens (<992px) */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #343a40;
+        z-index: 2000;
+        padding: 1rem 0;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .navbar {
+        position: relative;
+    }
+
+    .text-section {
+        margin-top: 150px !important;
+        text-align: center;
+    }
+
+    .exp-toggle {
+        text-align: center;
+        font-size: 1.3rem;
+    }
+
+    .exp-body {
+        text-align: left;
+    }
+}
+
+/* Mobile (<576px) */
+@media (max-width: 576px) {
+    .profile-pic {
+        width: 230px !important;
+        height: 230px !important;
+        border-width: 5px;
+        bottom: -115px !important;
+    }
+
+    .text-section {
+        margin-top: 120px !important;
+        text-align: center;
+    }
+
+    .section-title {
+        text-align: center;
+    }
+
+    .exp-toggle .chevron {
+        display: inline-block;
+    }
+}
+
+/* Desktop — hide chevron */
+@media (min-width: 577px) {
+    .exp-toggle .chevron {
+        display: none !important;
+    }
+}
+
+/* FORCE DESKTOP EXPERIENCE ITEMS TO BE ALWAYS OPEN */
+@media (min-width: 577px) {
+
+    /* Disable collapse animation entirely */
+    .experience-content .collapse {
+        max-height: none !important;
+        overflow: visible !important;
+        height: auto !important;
+        opacity: 1 !important;
+        padding-bottom: 0 !important;
+    }
+
+    /* Disable toggle interaction */
+    .exp-toggle {
+        pointer-events: none !important;
+    }
+
+        /* Hide chevrons on desktop */
+        .exp-toggle .chevron {
+            display: none !important;
+        }
+}
