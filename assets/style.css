@@ -55,7 +55,8 @@
    SECTIONS
 ================================================== */
 .section-block {
-    padding: 60px 0;
+    padding: 30px 0;
+    scroll-margin-top: 90px; /* prevents sticky navbar overlap */
 }
 
 .section-title {
@@ -179,16 +180,11 @@
    RESPONSIVE BREAKPOINTS
 ================================================== */
 
-/* Desktop wide (≥1320px) */
-@media (min-width: 1320px) {
+/* Desktop PFP alignment */
+@media (min-width: 1400px) {
     .pfp-wrapper {
         left: calc((100vw - 1320px) / 2);
         transform: none;
-    }
-
-    .text-section {
-        margin-top: 60px !important;
-        text-align: left;
     }
 }
 
@@ -209,14 +205,6 @@
     }
 }
 
-/* Tablet / small desktop (768–1319px) */
-@media (min-width: 768px) and (max-width: 1319.98px) {
-    .text-section {
-        margin-top: 150px !important;
-        text-align: center;
-    }
-}
-
 /* Small screens (<992px) */
 @media (max-width: 991.98px) {
     .navbar-collapse {
@@ -232,11 +220,6 @@
 
     .navbar {
         position: relative;
-    }
-
-    .text-section {
-        margin-top: 150px !important;
-        text-align: center;
     }
 
     .exp-toggle {
@@ -258,11 +241,6 @@
         bottom: -115px !important;
     }
 
-    .text-section {
-        margin-top: 120px !important;
-        text-align: center;
-    }
-
     .section-title {
         text-align: center;
     }
@@ -281,8 +259,6 @@
 
 /* FORCE DESKTOP EXPERIENCE ITEMS TO BE ALWAYS OPEN */
 @media (min-width: 577px) {
-
-    /* Disable collapse animation entirely */
     .experience-content .collapse {
         max-height: none !important;
         overflow: visible !important;
@@ -291,13 +267,283 @@
         padding-bottom: 0 !important;
     }
 
-    /* Disable toggle interaction */
     .exp-toggle {
         pointer-events: none !important;
     }
 
-        /* Hide chevrons on desktop */
         .exp-toggle .chevron {
             display: none !important;
         }
+}
+
+/* ==================================================
+   EDUCATION — STRUCTURE ONLY
+================================================== */
+.education-item {
+    margin-bottom: 30px;
+}
+
+.edu-degree {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.edu-school {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.edu-details {
+    margin: 0;
+    padding-left: 20px;
+}
+
+    .edu-details li {
+        margin-bottom: 6px;
+    }
+
+/* ==================================================
+   SKILLS — STRUCTURE ONLY
+================================================== */
+.skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.skills-column {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .skills-column li {
+        margin-bottom: 12px;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .skills-column i {
+        font-size: 1.2rem;
+    }
+
+/* ==================================================
+   INTERESTS — STRUCTURE ONLY
+================================================== */
+.interests-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.interests-column {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .interests-column li {
+        margin-bottom: 12px;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .interests-column i {
+        font-size: 1.2rem;
+    }
+
+/* Restore sticky navbar behavior */
+.navbar.sticky-top {
+    position: sticky !important;
+    top: 0;
+    z-index: 1030;
+}
+
+/* About section spacing */
+#about {
+    padding-top: 200px;
+}
+
+/* ==================================================
+   NAME + PRONOUNS (DESKTOP ONLY, RIGHT OF PFP)
+================================================== */
+@media (min-width: 1400px) {
+    .name-role-desktop {
+        position: absolute;
+        /* anchor to the same left edge as the PFP wrapper */
+        left: calc((100vw - 1320px) / 2 + 300px + 20px);
+        /* vertically align with bottom half of PFP */
+        bottom: -75px; /* halfway between -150 and 0 */
+
+        width: 260px;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: left;
+        z-index: 30;
+        pointer-events: none;
+    }
+
+        .name-role-desktop .name-line {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .name-role-desktop .pronouns-line {
+            font-size: 1.1rem;
+            margin: 0;
+            opacity: 0.85;
+            line-height: 1.2;
+        }
+}
+
+@media (max-width: 1399px) {
+    .name-role-desktop {
+        position: absolute;
+        left: 50%;
+        bottom: -220px; /* places text below the PFP */
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        pointer-events: none;
+        z-index: 30;
+    }
+
+        .name-role-desktop .name-line {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .name-role-desktop .pronouns-line {
+            font-size: 1.1rem;
+            margin: 0;
+            opacity: 0.85;
+        }
+}
+
+@media (max-width: 1399px) {
+    #about {
+        padding-top: 180px !important;
+    }
+}
+
+@media (max-width: 1399px) and (min-width: 577px) {
+    .name-role-desktop {
+        position: absolute;
+        left: 50%;
+        bottom: -220px; /* correct for 300px PFP */
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 300px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        z-index: 30;
+        pointer-events: none;
+    }
+
+    #about {
+        padding-top: 240px !important; /* ensures consistent gap */
+    }
+}
+
+@media (max-width: 576px) {
+    .name-role-desktop {
+        position: absolute;
+        left: 50%;
+        bottom: -175px; /* perfect for 230px PFP */
+        transform: translateX(-50%);
+        width: 100%;
+        max-width: 260px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        z-index: 30;
+        pointer-events: none;
+    }
+
+    #about {
+        padding-top: 220px !important; /* keeps consistent gap below text */
+    }
+}
+
+/* ==================================================
+   COMPANY INFO (DESKTOP ONLY, RIGHT EDGE)
+================================================== */
+@media (min-width: 1400px) {
+    .company-info-desktop {
+        position: absolute;
+        /* same vertical anchor as name/pronouns */
+        bottom: -75px;
+        /* align with right margin of 1320px container */
+        right: calc((100vw - 1320px) / 2);
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        z-index: 30;
+        pointer-events: none;
+    }
+
+    .company-logo {
+        width: 100px !important;
+        height: 100px !important;
+        object-fit: contain; /* keep full logo visible */
+        background: none; /* no white tile */
+        border: 6px solid #fff; /* match PFP border thickness */
+        border-radius: 8px; /* optional: soften corners */
+        box-shadow: 0 4px 12px rgba(0,0,0,0.25); /* match PFP shadow */
+        padding: 0; /* ensure no extra white space */
+    }
+
+    .company-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: left;
+        margin-top: 20px;
+    }
+
+    .company-name {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .company-role {
+        font-size: 1rem;
+        opacity: 0.85;
+        margin: 0;
+    }
+
+    .company-year {
+        font-size: 0.9rem;
+        opacity: 0.7;
+        margin: 0;
+    }
+}
+
+/* Hide company info on anything smaller than 1400px */
+@media (max-width: 1399px) {
+    .company-info-desktop {
+        display: none !important;
+    }
 }
