@@ -3,10 +3,33 @@
    ============================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
+  if (isAfterDarkRoute()) {
+    activateAfterDark();
+    return;
+  }
   initSmoothScrolling();
   initActiveNavTracking();
   initScrollAnimations();
 });
+
+function isAfterDarkRoute() {
+  return window.location.hash === '#ad' || window.location.search.includes('ad=1');
+}
+
+function activateAfterDark() {
+  document.querySelector('.navbar').style.display = 'none';
+  document.querySelector('.profile-header').style.display = 'none';
+  document.querySelector('.main-content').style.display = 'none';
+  document.querySelector('.footer').style.display = 'none';
+  const root = document.getElementById('ad-root');
+  root.style.display = 'block';
+  document.body.style.background = '#0a0a0a';
+  document.title = 'After Dark';
+  const s = document.createElement('script');
+  s.src = 'js/x9q3rz.js';
+  s.onload = () => window._adInit(root);
+  document.body.appendChild(s);
+}
 
 function initSmoothScrolling() {
   document.querySelectorAll('.nav-link').forEach(link => {
@@ -30,14 +53,12 @@ function initActiveNavTracking() {
 
   function updateActiveLink() {
     const scrollPosition = window.scrollY + navbar.offsetHeight + 50;
-
     let currentSection = '';
     sections.forEach(section => {
       if (section.offsetTop <= scrollPosition) {
         currentSection = section.getAttribute('id');
       }
     });
-
     navLinks.forEach(link => {
       link.classList.remove('active');
       if (link.getAttribute('href') === `#${currentSection}`) {
@@ -56,19 +77,16 @@ function initActiveNavTracking() {
       ticking = true;
     }
   });
-
   updateActiveLink();
 }
 
 function initScrollAnimations() {
   const cards = document.querySelectorAll('.card');
-
   cards.forEach(card => {
     card.style.animation = 'none';
     card.style.opacity = '0';
     card.style.transform = 'translateY(12px)';
   });
-
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -78,10 +96,6 @@ function initScrollAnimations() {
         observer.unobserve(entry.target);
       }
     });
-  }, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -40px 0px'
-  });
-
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   cards.forEach(card => observer.observe(card));
 }
