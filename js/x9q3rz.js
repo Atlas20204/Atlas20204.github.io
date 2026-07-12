@@ -2,7 +2,10 @@
 window._adInit = function(root) {
   const LS_KEY = 'ad_data';
   const LS_ADMIN = 'ad_admin';
+  const LS_RATE = 'ad_rate';
   const ADMIN_PW = 'afterdark2025';
+  const RATE_LIMIT = 5;
+  const RATE_WINDOW = 600000;
   const REACTIONS = ['like','heart','fire','think','laugh'];
   const REACTION_EMOJI = { like:'👍', heart:'❤️', fire:'🔥', think:'🤔', laugh:'😂' };
 
@@ -44,6 +47,27 @@ window._adInit = function(root) {
     return div.innerHTML;
   }
 
+  function compressImage(file, maxW, maxH, quality) {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          let w = img.width, h = img.height;
+          if (w > maxW) { h = h * maxW / w; w = maxW; }
+          if (h > maxH) { w = w * maxH / h; h = maxH; }
+          const canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          resolve(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
   function injectStyles() {
     const style = document.createElement('style');
     style.textContent = `
@@ -57,10 +81,13 @@ window._adInit = function(root) {
       .ad-login-btn { position:absolute; top:0; right:0; background:none; border:1px solid #333; border-radius:6px; color:#555; font-size:11px; padding:4px 10px; cursor:pointer; font-family:inherit; }
       .ad-login-btn:hover { border-color:#555; color:#888; }
       .ad-admin-badge { display:inline-block; background:linear-gradient(135deg,#0a66c2,#004182); color:#fff; font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; margin-left:6px; vertical-align:middle; letter-spacing:0.5px; }
-      .ad-admin-bar { background:#0d1b2a; border:1px solid #1b3a5c; border-radius:8px; padding:10px 16px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; }
+      .ad-admin-bar { background:#0d1b2a; border:1px solid #1b3a5c; border-radius:8px; padding:10px 16px; margin-bottom:16px; display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; }
       .ad-admin-bar span { color:#5ba3e6; font-size:13px; font-weight:600; }
+      .ad-admin-bar .ad-admin-actions { display:flex; gap:6px; }
       .ad-admin-bar button { background:none; border:1px solid #1b3a5c; border-radius:6px; color:#5ba3e6; font-size:12px; padding:4px 12px; cursor:pointer; font-family:inherit; }
       .ad-admin-bar button:hover { background:#1b3a5c; }
+      .ad-admin-bar button.ad-danger { border-color:#5c1b1b; color:#e55; }
+      .ad-admin-bar button.ad-danger:hover { background:#5c1b1b; }
       .ad-login-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:999; align-items:center; justify-content:center; }
       .ad-login-modal.show { display:flex; }
       .ad-login-box { background:#141414; border:1px solid #333; border-radius:12px; padding:24px; width:320px; }
@@ -72,15 +99,22 @@ window._adInit = function(root) {
       .ad-login-cancel { background:#222; color:#999; }
       .ad-login-submit { background:#0a66c2; color:#fff; }
       .ad-login-error { color:#e55; font-size:12px; margin-bottom:8px; display:none; }
-      .ad-new { background:#141414; border:1px solid #222; border-radius:12px; padding:20px; margin-bottom:24px; }
+      .ad-new { background:#141414; border:1px solid #222; border-radius:12px; padding:20px; margin-bottom:24px; display:none; }
+      .ad-new.show { display:block; }
       .ad-new textarea { width:100%; background:#1a1a1a; border:1px solid #333; border-radius:8px; color:#e0e0e0; font-family:inherit; font-size:14px; padding:12px; resize:vertical; min-height:80px; outline:none; transition:border-color 0.2s; }
       .ad-new textarea:focus { border-color:#555; }
       .ad-new input[type=text] { width:100%; background:#1a1a1a; border:1px solid #333; border-radius:8px; color:#e0e0e0; font-family:inherit; font-size:14px; padding:10px 12px; outline:none; margin-bottom:10px; transition:border-color 0.2s; }
       .ad-new input[type=text]:focus { border-color:#555; }
-      .ad-new-row { display:flex; gap:10px; margin-top:10px; align-items:center; }
+      .ad-new-row { display:flex; gap:10px; margin-top:10px; align-items:center; flex-wrap:wrap; }
       .ad-new input[type=text] { flex:1; margin-bottom:0; }
       .ad-btn { background:#e0e0e0; color:#0a0a0a; border:none; border-radius:8px; padding:10px 20px; font-family:inherit; font-size:14px; font-weight:600; cursor:pointer; transition:background 0.2s; white-space:nowrap; }
       .ad-btn:hover { background:#fff; }
+      .ad-img-label { display:inline-flex; align-items:center; gap:4px; background:#1a1a1a; border:1px solid #333; border-radius:8px; padding:8px 14px; font-size:13px; color:#999; cursor:pointer; transition:all 0.2s; }
+      .ad-img-label:hover { border-color:#555; color:#ccc; }
+      .ad-img-label input { display:none; }
+      .ad-img-preview { margin-top:10px; position:relative; display:inline-block; }
+      .ad-img-preview img { max-width:200px; max-height:150px; border-radius:8px; border:1px solid #333; }
+      .ad-img-preview .ad-img-remove { position:absolute; top:-6px; right:-6px; background:#333; color:#fff; border:none; border-radius:50%; width:20px; height:20px; font-size:12px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
       .ad-post { background:#141414; border:1px solid #222; border-radius:12px; padding:20px; margin-bottom:16px; transition:border-color 0.2s; }
       .ad-post:hover { border-color:#333; }
       .ad-post.admin-post { border-color:#1b3a5c; background:#0d1520; }
@@ -90,6 +124,9 @@ window._adInit = function(root) {
       .ad-post-time { font-size:12px; color:#555; }
       .ad-post-title { font-size:18px; font-weight:700; color:#fff; margin-bottom:8px; line-height:1.3; }
       .ad-post-body { font-size:14px; color:#ccc; line-height:1.7; white-space:pre-wrap; word-break:break-word; }
+      .ad-post-img { margin-top:12px; }
+      .ad-post-img img { max-width:100%; border-radius:8px; border:1px solid #222; cursor:pointer; transition:transform 0.2s; }
+      .ad-post-img img:hover { transform:scale(1.01); }
       .ad-post-actions { display:flex; gap:6px; margin-top:14px; padding-top:12px; border-top:1px solid #222; flex-wrap:wrap; }
       .ad-react-btn { background:#1a1a1a; border:1px solid #333; border-radius:20px; padding:5px 12px; font-size:13px; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; gap:4px; color:#999; }
       .ad-react-btn:hover { border-color:#555; background:#222; }
@@ -114,6 +151,9 @@ window._adInit = function(root) {
       .ad-delete { background:none; border:none; color:#444; font-size:12px; cursor:pointer; padding:2px 6px; border-radius:4px; }
       .ad-delete:hover { color:#e55; background:#2a1515; }
       .ad-footer { text-align:center; padding:24px 0; color:#333; font-size:11px; }
+      .ad-lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:1000; align-items:center; justify-content:center; cursor:zoom-out; }
+      .ad-lightbox.show { display:flex; }
+      .ad-lightbox img { max-width:90vw; max-height:90vh; border-radius:8px; }
       @media(max-width:480px) { .ad-wrap { padding:12px 10px 40px; } .ad-new { padding:14px; } .ad-post { padding:14px; } }
     `;
     document.head.appendChild(style);
@@ -128,7 +168,7 @@ window._adInit = function(root) {
     header.className = 'ad-header';
     header.innerHTML = `
       <h1>After Dark</h1>
-      <p>Anonymous Blog · Anonymous Comments · Anonymous Reactions</p>
+      <p>Anonymous comments and reactions</p>
       <button class="ad-login-btn" id="ad-login-toggle">${isAdmin ? '🔒 Admin' : '🔑 Admin'}</button>
     `;
     wrap.appendChild(header);
@@ -136,12 +176,25 @@ window._adInit = function(root) {
     if (isAdmin) {
       const bar = document.createElement('div');
       bar.className = 'ad-admin-bar';
-      bar.innerHTML = `<span>Admin Mode Active</span><button id="ad-logout">Logout</button>`;
+      bar.innerHTML = `
+        <span>Admin Mode Active</span>
+        <div class="ad-admin-actions">
+          <button id="ad-clear-posts" class="ad-danger">Clear All Posts</button>
+          <button id="ad-logout">Logout</button>
+        </div>
+      `;
       wrap.appendChild(bar);
       bar.querySelector('#ad-logout').addEventListener('click', () => {
         localStorage.removeItem(LS_ADMIN);
         isAdmin = false;
         render();
+      });
+      bar.querySelector('#ad-clear-posts').addEventListener('click', () => {
+        if (confirm('Delete ALL posts? This cannot be undone.')) {
+          data.posts = [];
+          saveData();
+          renderPosts();
+        }
       });
     }
 
@@ -162,15 +215,17 @@ window._adInit = function(root) {
     wrap.appendChild(modal);
 
     const newPost = document.createElement('div');
-    newPost.className = 'ad-new';
-    const namePlaceholder = isAdmin ? 'Admin' : 'Nickname (optional)';
-    const nameValue = isAdmin ? 'Admin' : '';
+    newPost.className = 'ad-new' + (isAdmin ? ' show' : '');
     newPost.innerHTML = `
-      <input type="text" id="ad-name" placeholder="${namePlaceholder}" maxlength="30" value="${nameValue}">
       <input type="text" id="ad-title" placeholder="Title" maxlength="120">
       <textarea id="ad-body" placeholder="Write something..." rows="3"></textarea>
+      <div id="ad-img-preview-container"></div>
       <div class="ad-new-row">
         <button class="ad-btn" id="ad-submit">Post</button>
+        <label class="ad-img-label">
+          📷 Image
+          <input type="file" id="ad-img-input" accept="image/*">
+        </label>
       </div>
     `;
     wrap.appendChild(newPost);
@@ -184,9 +239,33 @@ window._adInit = function(root) {
     footer.textContent = 'After Dark · All data stored locally in your browser only';
     wrap.appendChild(footer);
 
+    const lightbox = document.createElement('div');
+    lightbox.className = 'ad-lightbox';
+    lightbox.id = 'ad-lightbox';
+    lightbox.innerHTML = '<img src="" alt="">';
+    lightbox.addEventListener('click', () => lightbox.classList.remove('show'));
+    wrap.appendChild(lightbox);
+
     root.appendChild(wrap);
 
     document.getElementById('ad-submit').addEventListener('click', createPost);
+
+    const imgInput = document.getElementById('ad-img-input');
+    let pendingImage = null;
+    imgInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (file.size > 10 * 1024 * 1024) { alert('Image must be under 10MB'); return; }
+      pendingImage = await compressImage(file, 1200, 900, 0.8);
+      const container = document.getElementById('ad-img-preview-container');
+      container.innerHTML = `<div class="ad-img-preview"><img src="${pendingImage}" alt="Preview"><button class="ad-img-remove" id="ad-img-remove">✕</button></div>`;
+      document.getElementById('ad-img-remove').addEventListener('click', () => {
+        pendingImage = null;
+        container.innerHTML = '';
+        imgInput.value = '';
+      });
+    });
+
     document.getElementById('ad-login-toggle').addEventListener('click', () => {
       document.getElementById('ad-login-modal').classList.add('show');
       document.getElementById('ad-pw').value = '';
@@ -218,20 +297,24 @@ window._adInit = function(root) {
   }
 
   function createPost() {
-    const nameEl = document.getElementById('ad-name');
     const titleEl = document.getElementById('ad-title');
     const bodyEl = document.getElementById('ad-body');
+    const imgInput = document.getElementById('ad-img-input');
     const title = titleEl.value.trim();
     const body = bodyEl.value.trim();
     if (!title && !body) return;
 
+    const imgPreview = document.querySelector('#ad-img-preview-container .ad-img-preview img');
+    const image = imgPreview ? imgPreview.src : null;
+
     const post = {
       id: genId(),
-      author: nameEl.value.trim() || 'Anonymous',
+      author: 'Admin',
       title: title,
       body: body,
+      image: image,
       timestamp: Date.now(),
-      admin: isAdmin,
+      admin: true,
       reactions: {},
       comments: []
     };
@@ -240,6 +323,8 @@ window._adInit = function(root) {
     saveData();
     titleEl.value = '';
     bodyEl.value = '';
+    document.getElementById('ad-img-preview-container').innerHTML = '';
+    if (imgInput) imgInput.value = '';
     renderPosts();
   }
 
@@ -249,7 +334,7 @@ window._adInit = function(root) {
     container.innerHTML = '';
 
     if (data.posts.length === 0) {
-      container.innerHTML = '<div class="ad-empty"><p>No posts yet. Be the first to post!</p></div>';
+      container.innerHTML = '<div class="ad-empty"><p>No posts yet.</p></div>';
       return;
     }
 
@@ -261,6 +346,7 @@ window._adInit = function(root) {
       const myId = getVisitorId();
       const titleHtml = post.title ? `<div class="ad-post-title">${escapeHtml(post.title)}</div>` : '';
       const badgeHtml = post.admin ? '<span class="ad-admin-badge">ADMIN</span>' : '';
+      const imgHtml = post.image ? `<div class="ad-post-img"><img src="${post.image}" alt="Post image"></div>` : '';
 
       let reactionsHtml = REACTIONS.map(r => {
         const count = (post.reactions[r] || []).length;
@@ -278,6 +364,7 @@ window._adInit = function(root) {
         </div>
         ${titleHtml}
         <div class="ad-post-body">${escapeHtml(post.body)}</div>
+        ${imgHtml}
         <div class="ad-post-actions">
           ${reactionsHtml}
           <button class="ad-comments-toggle" data-toggle="${post.id}">💬 ${post.comments.length}</button>
@@ -287,6 +374,13 @@ window._adInit = function(root) {
       container.appendChild(el);
     });
 
+    container.querySelectorAll('.ad-post-img img').forEach(img => {
+      img.addEventListener('click', () => {
+        const lb = document.getElementById('ad-lightbox');
+        lb.querySelector('img').src = img.src;
+        lb.classList.add('show');
+      });
+    });
     container.querySelectorAll('.ad-react-btn').forEach(btn => {
       btn.addEventListener('click', () => toggleReaction(btn.dataset.post, btn.dataset.reaction));
     });
@@ -347,9 +441,19 @@ window._adInit = function(root) {
     form.className = 'ad-comment-form';
     form.innerHTML = `<input type="text" placeholder="Anonymous comment..." maxlength="500"><button>Send</button>`;
     const input = form.querySelector('input');
+    const rateMsg = document.createElement('div');
+    rateMsg.style.cssText = 'color:#e55;font-size:12px;margin-top:6px;display:none;';
+    form.appendChild(rateMsg);
     form.querySelector('button').addEventListener('click', () => {
       const body = input.value.trim();
       if (!body) return;
+      const rate = checkRateLimit();
+      if (!rate.ok) {
+        rateMsg.textContent = `Slow down. Try again in ${rate.wait} min.`;
+        rateMsg.style.display = 'block';
+        return;
+      }
+      rateMsg.style.display = 'none';
       post.comments.push({
         author: isAdmin ? 'Admin' : 'Anonymous',
         body: body,
@@ -381,6 +485,24 @@ window._adInit = function(root) {
       localStorage.setItem('ad_vid', id);
     }
     return id;
+  }
+
+  function checkRateLimit() {
+    if (isAdmin) return { ok: true };
+    const vid = getVisitorId();
+    let rates = {};
+    try { rates = JSON.parse(localStorage.getItem(LS_RATE)) || {}; } catch(e) {}
+    const now = Date.now();
+    const timestamps = (rates[vid] || []).filter(t => now - t < RATE_WINDOW);
+    if (timestamps.length >= RATE_LIMIT) {
+      const oldest = timestamps[0];
+      const wait = Math.ceil((RATE_WINDOW - (now - oldest)) / 60000);
+      return { ok: false, wait: wait };
+    }
+    timestamps.push(now);
+    rates[vid] = timestamps;
+    localStorage.setItem(LS_RATE, JSON.stringify(rates));
+    return { ok: true };
   }
 
   injectStyles();
