@@ -1,0 +1,658 @@
+/* ============================================
+   LinkedIn-Style Resume Website
+   ============================================ */
+
+:root {
+  --linkedin-blue: #0a66c2;
+  --linkedin-blue-hover: #004182;
+  --linkedin-bg: #f4f2ee;
+  --card-bg: #ffffff;
+  --text-primary: #191919;
+  --text-secondary: #666666;
+  --text-muted: #00000099;
+  --border-color: #e0dfdc;
+  --hover-bg: #f5f5f5;
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--linkedin-bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================
+   Navigation
+   ============================================ */
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.nav-container {
+  max-width: 1128px;
+  margin: 0 auto;
+  padding: 0 16px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+  background: var(--hover-bg);
+}
+
+.nav-link.active {
+  color: var(--text-primary);
+}
+
+.nav-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  background: var(--text-primary);
+}
+
+.btn-resume {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 16px;
+  border: 1px solid var(--linkedin-blue);
+  border-radius: 16px;
+  color: var(--linkedin-blue);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  background: transparent;
+}
+
+.btn-resume:hover {
+  background: rgba(10, 102, 194, 0.08);
+}
+
+/* ============================================
+   Profile Header
+   ============================================ */
+
+.profile-header {
+  position: relative;
+  margin-top: 52px;
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border-color);
+  overflow: hidden;
+}
+
+.header-bg {
+  height: 200px;
+  background: linear-gradient(135deg, #004182 0%, #0a66c2 40%, #378fe9 100%);
+  position: relative;
+}
+
+.header-bg::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.05));
+}
+
+.header-container {
+  max-width: 1128px;
+  margin: 0 auto;
+  padding: 0 16px;
+  position: relative;
+}
+
+.profile-avatar {
+  position: absolute;
+  bottom: -60px;
+  left: 16px;
+}
+
+.avatar-circle {
+  width: 152px;
+  height: 152px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0a66c2, #004182);
+  border: 4px solid var(--card-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 52px;
+  font-weight: 700;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  user-select: none;
+}
+
+.profile-info {
+  padding: 76px 0 24px 184px;
+}
+
+.profile-name {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.profile-title {
+  font-size: 16px;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.profile-location {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.profile-connections {
+  font-size: 14px;
+}
+
+.contact-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--linkedin-blue);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.contact-link:hover {
+  color: var(--linkedin-blue-hover);
+  text-decoration: underline;
+}
+
+.separator {
+  color: var(--text-muted);
+}
+
+/* ============================================
+   Main Content
+   ============================================ */
+
+.main-content {
+  max-width: 1128px;
+  margin: 24px auto;
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card {
+  background: var(--card-bg);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  padding: 24px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+}
+
+.subsection-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 20px 0 12px;
+}
+
+/* ============================================
+   About Section
+   ============================================ */
+
+.about-text {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-primary);
+}
+
+/* ============================================
+   Experience Section
+   ============================================ */
+
+.experience-item {
+  display: flex;
+  gap: 12px;
+}
+
+.experience-logo {
+  flex-shrink: 0;
+}
+
+.logo-placeholder {
+  width: 48px;
+  height: 48px;
+  border-radius: 4px;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.experience-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.experience-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.experience-role {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.experience-company {
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.experience-dept {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.experience-meta {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.experience-date {
+  font-size: 14px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.experience-location {
+  font-size: 14px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.experience-list {
+  margin-top: 12px;
+  padding-left: 20px;
+}
+
+.experience-list li {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.experience-list li::marker {
+  color: var(--text-secondary);
+}
+
+.experience-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 20px 0;
+}
+
+/* ============================================
+   Education Section
+   ============================================ */
+
+.education-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.education-logo {
+  flex-shrink: 0;
+}
+
+.education-content {
+  flex: 1;
+}
+
+.education-school {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.education-degree {
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.education-date {
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.education-gpa {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.education-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 20px 0;
+}
+
+/* ============================================
+   Skills Section
+   ============================================ */
+
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 16px;
+  background: rgba(10, 102, 194, 0.08);
+  border: 1px solid rgba(10, 102, 194, 0.2);
+  border-radius: 16px;
+  transition: all 0.2s ease;
+}
+
+.skill-item:hover {
+  background: rgba(10, 102, 194, 0.15);
+  border-color: rgba(10, 102, 194, 0.4);
+}
+
+.skill-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--linkedin-blue);
+}
+
+.certifications {
+  margin-top: 8px;
+}
+
+.cert-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cert-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+  color: white;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: 0 1px 3px rgba(10, 102, 194, 0.3);
+}
+
+/* ============================================
+   Projects Section
+   ============================================ */
+
+.project-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+}
+
+.project-item:not(:last-child) {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 20px;
+  margin-bottom: 4px;
+}
+
+.project-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  background: rgba(10, 102, 194, 0.08);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.project-content {
+  flex: 1;
+}
+
+.project-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.project-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+
+.footer {
+  background: var(--card-bg);
+  border-top: 1px solid var(--border-color);
+  padding: 16px 0;
+  margin-top: 24px;
+  text-align: center;
+}
+
+.footer-container {
+  max-width: 1128px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.footer p {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+
+  .header-bg {
+    height: 140px;
+  }
+
+  .avatar-circle {
+    width: 100px;
+    height: 100px;
+    font-size: 36px;
+    border-width: 3px;
+  }
+
+  .profile-avatar {
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .profile-info {
+    padding: 68px 16px 24px;
+    text-align: center;
+  }
+
+  .profile-name {
+    font-size: 22px;
+  }
+
+  .contact-info {
+    justify-content: center;
+  }
+
+  .experience-header {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .experience-meta {
+    text-align: left;
+  }
+
+  .experience-logo {
+    display: none;
+  }
+
+  .education-logo {
+    display: none;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .section-title {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 0 12px;
+  }
+
+  .btn-resume {
+    font-size: 12px;
+    padding: 4px 12px;
+  }
+
+  .avatar-circle {
+    width: 80px;
+    height: 80px;
+    font-size: 28px;
+  }
+
+  .skills-grid {
+    gap: 6px;
+  }
+
+  .skill-item {
+    padding: 4px 12px;
+  }
+
+  .skill-name {
+    font-size: 13px;
+  }
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+
+.card {
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+.about-card { animation-delay: 0.1s; }
+.experience-card { animation-delay: 0.15s; }
+.education-card { animation-delay: 0.2s; }
+.skills-card { animation-delay: 0.25s; }
+.projects-card { animation-delay: 0.3s; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
