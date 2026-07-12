@@ -154,8 +154,8 @@ body {
 
 .profile-avatar {
   position: absolute;
-  bottom: -60px;
-  left: 16px;
+  bottom: -68px;
+  left: 24px;
 }
 
 .avatar-circle {
@@ -175,7 +175,7 @@ body {
 }
 
 .profile-info {
-  padding: 76px 0 24px 184px;
+  padding: 84px 0 24px 0;
 }
 
 .profile-name {
@@ -549,20 +549,20 @@ body {
   }
 
   .avatar-circle {
-    width: 100px;
-    height: 100px;
-    font-size: 36px;
+    width: 120px;
+    height: 120px;
+    font-size: 40px;
     border-width: 3px;
   }
 
   .profile-avatar {
-    bottom: -40px;
+    bottom: -60px;
     left: 50%;
     transform: translateX(-50%);
   }
 
   .profile-info {
-    padding: 68px 16px 24px;
+    padding: 76px 16px 24px;
     text-align: center;
   }
 
@@ -611,9 +611,9 @@ body {
   }
 
   .avatar-circle {
-    width: 80px;
-    height: 80px;
-    font-size: 28px;
+    width: 96px;
+    height: 96px;
+    font-size: 32px;
   }
 
   .skills-grid {
