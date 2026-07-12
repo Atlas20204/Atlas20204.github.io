@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404</title>
+  <style>
+    body { margin:0; background:#0a0a0a; display:flex; align-items:center; justify-content:center; min-height:100vh; font-family:system-ui,sans-serif; }
+    .msg { color:#333; font-size:14px; }
+  </style>
+</head>
+<body>
+  <p class="msg">Page not found.</p>
+  <script>
+    (function() {
+      var path = decodeURIComponent(window.location.pathname).toLowerCase();
+      if (path.indexOf('afterdark') !== -1) {
+        window.location.replace(window.location.origin + '/index.html#ad');
+      }
+    })();
+  </script>
+</body>
+</html>
