@@ -40,10 +40,11 @@ function activateAfterDark() {
   root.style.display = 'block';
   document.body.style.background = '#0a0a0a';
   document.title = 'After Dark';
-  const s = document.createElement('script');
-  s.src = 'js/x9q3rz.js';
-  s.onload = () => window._adInit(root);
-  document.body.appendChild(s);
+  if (typeof window._adInit === 'function') {
+    window._adInit(root);
+  } else {
+    root.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#666;font-family:system-ui"><p>Blog module not loaded.</p><p style="margin-top:8px;font-size:13px">Refresh and try again.</p></div>';
+  }
 }
 
 function initSmoothScrolling() {
