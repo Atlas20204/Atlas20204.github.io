@@ -128,7 +128,7 @@ window._adInit = function(root) {
     header.className = 'ad-header';
     header.innerHTML = `
       <h1>After Dark</h1>
-      <p>匿名博客 · 匿名评论 · 匿名反应</p>
+      <p>Anonymous Blog · Anonymous Comments · Anonymous Reactions</p>
       <button class="ad-login-btn" id="ad-login-toggle">${isAdmin ? '🔒 Admin' : '🔑 Admin'}</button>
     `;
     wrap.appendChild(header);
@@ -163,14 +163,14 @@ window._adInit = function(root) {
 
     const newPost = document.createElement('div');
     newPost.className = 'ad-new';
-    const namePlaceholder = isAdmin ? 'Admin' : '匿名昵称 (可选)';
+    const namePlaceholder = isAdmin ? 'Admin' : 'Nickname (optional)';
     const nameValue = isAdmin ? 'Admin' : '';
     newPost.innerHTML = `
       <input type="text" id="ad-name" placeholder="${namePlaceholder}" maxlength="30" value="${nameValue}">
-      <input type="text" id="ad-title" placeholder="标题" maxlength="120">
-      <textarea id="ad-body" placeholder="写点什么..." rows="3"></textarea>
+      <input type="text" id="ad-title" placeholder="Title" maxlength="120">
+      <textarea id="ad-body" placeholder="Write something..." rows="3"></textarea>
       <div class="ad-new-row">
-        <button class="ad-btn" id="ad-submit">发布</button>
+        <button class="ad-btn" id="ad-submit">Post</button>
       </div>
     `;
     wrap.appendChild(newPost);
@@ -181,7 +181,7 @@ window._adInit = function(root) {
 
     const footer = document.createElement('div');
     footer.className = 'ad-footer';
-    footer.textContent = 'After Dark · 所有数据仅存储在本地浏览器';
+    footer.textContent = 'After Dark · All data stored locally in your browser only';
     wrap.appendChild(footer);
 
     root.appendChild(wrap);
@@ -227,7 +227,7 @@ window._adInit = function(root) {
 
     const post = {
       id: genId(),
-      author: nameEl.value.trim() || '匿名',
+      author: nameEl.value.trim() || 'Anonymous',
       title: title,
       body: body,
       timestamp: Date.now(),
@@ -249,7 +249,7 @@ window._adInit = function(root) {
     container.innerHTML = '';
 
     if (data.posts.length === 0) {
-      container.innerHTML = '<div class="ad-empty"><p>还没有帖子，成为第一个发帖的人吧</p></div>';
+      container.innerHTML = '<div class="ad-empty"><p>No posts yet. Be the first to post!</p></div>';
       return;
     }
 
@@ -274,7 +274,7 @@ window._adInit = function(root) {
             <div class="ad-post-author">${escapeHtml(post.author)}${badgeHtml}</div>
             <div class="ad-post-time">${timeAgo(post.timestamp)}</div>
           </div>
-          <button class="ad-delete" data-delete="${post.id}" title="删除">✕</button>
+          <button class="ad-delete" data-delete="${post.id}" title="Delete">✕</button>
         </div>
         ${titleHtml}
         <div class="ad-post-body">${escapeHtml(post.body)}</div>
@@ -345,13 +345,13 @@ window._adInit = function(root) {
 
     const form = document.createElement('div');
     form.className = 'ad-comment-form';
-    form.innerHTML = `<input type="text" placeholder="匿名评论..." maxlength="500"><button>发送</button>`;
+    form.innerHTML = `<input type="text" placeholder="Anonymous comment..." maxlength="500"><button>Send</button>`;
     const input = form.querySelector('input');
     form.querySelector('button').addEventListener('click', () => {
       const body = input.value.trim();
       if (!body) return;
       post.comments.push({
-        author: isAdmin ? 'Admin' : '匿名',
+        author: isAdmin ? 'Admin' : 'Anonymous',
         body: body,
         timestamp: Date.now(),
         admin: isAdmin
@@ -368,7 +368,7 @@ window._adInit = function(root) {
   }
 
   function deletePost(postId) {
-    if (!confirm('确定删除这条帖子?')) return;
+    if (!confirm('Delete this post?')) return;
     data.posts = data.posts.filter(p => p.id !== postId);
     saveData();
     renderPosts();
