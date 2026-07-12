@@ -148,12 +148,13 @@ body {
   max-width: 1128px;
   margin: 0 auto;
   padding: 0 16px;
+  position: relative;
 }
 
 .profile-avatar {
   position: absolute;
   top: 120px;
-  left: 40px;
+  left: 0;
   z-index: 1;
 }
 
