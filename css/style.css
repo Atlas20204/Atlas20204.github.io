@@ -126,7 +126,6 @@ body {
   margin-top: 52px;
   background: var(--card-bg);
   border-bottom: 1px solid var(--border-color);
-  overflow: hidden;
 }
 
 .header-bg {
@@ -149,13 +148,13 @@ body {
   max-width: 1128px;
   margin: 0 auto;
   padding: 0 16px;
-  position: relative;
 }
 
 .profile-avatar {
   position: absolute;
-  bottom: -80px;
-  left: 24px;
+  top: 136px;
+  left: 40px;
+  z-index: 1;
 }
 
 .avatar-circle {
@@ -175,7 +174,7 @@ body {
 }
 
 .profile-info {
-  padding: 96px 0 24px 0;
+  padding: 80px 0 24px 0;
 }
 
 .profile-name {
@@ -556,7 +555,7 @@ body {
   }
 
   .profile-avatar {
-    bottom: -63px;
+    top: 77px;
     left: 50%;
     transform: translateX(-50%);
   }
@@ -617,7 +616,7 @@ body {
   }
 
   .profile-avatar {
-    bottom: -51px;
+    top: 89px;
   }
 
   .profile-info {
