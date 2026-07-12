@@ -43,10 +43,16 @@ function _go() {
   document.body.appendChild(_r);
   document.body.style.background = '#0a0a0a';
   document.title = 'After Dark';
+  function _init() {
+    if (typeof window._xi === 'function') { window._xi(_r); return true; }
+    return false;
+  }
+  if (_init()) return;
   var _s = document.createElement('script');
   _s.src = 'js/' + ['x','9','q','3','r','z','.','j','s'].join('');
-  _s.onload = function() {
-    if (typeof window._xi === 'function') window._xi(_r);
+  _s.onload = _init;
+  _s.onerror = function() {
+    _r.innerHTML = '<div style="text-align:center;padding:60px 20px;color:#666;font-family:system-ui"><p>Module not loaded.</p><p style="margin-top:8px;font-size:13px">Refresh and try again.</p></div>';
   };
   document.body.appendChild(_s);
 }
