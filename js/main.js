@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     activateAfterDark();
     return;
   }
+  initAfterDarkListener();
   initSmoothScrolling();
   initActiveNavTracking();
   initScrollAnimations();
@@ -14,6 +15,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function isAfterDarkRoute() {
   return window.location.hash === '#ad' || window.location.search.includes('ad=1');
+}
+
+function initAfterDarkListener() {
+  const secret = 'afterdark';
+  let buffer = '';
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    buffer += e.key.toLowerCase();
+    if (buffer.length > secret.length) buffer = buffer.slice(-secret.length);
+    if (buffer === secret) {
+      buffer = '';
+      activateAfterDark();
+    }
+  });
 }
 
 function activateAfterDark() {
